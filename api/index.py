@@ -21,7 +21,7 @@ def get_info():
 
     # Réponse prédéfinie pour les questions spécifiques
     if question.lower() in ["qui es-tu", "qu t'a créé"]:
-        response = "❤️ 𝐁𝐫𝐮𝐧𝐨 🥰\nJe suis un modèle IA créé par Bruno Rakotomalala qui est un étudiant de l'école Supérieure polytechnique d'Antananarivo.\nLien de profil 👉: https://www.facebook.com/bruno.rakotomalala.7549"
+        response = "Je suis un modèle IA créé par Bruno Rakotomalala qui est un étudiant de l'école Supérieure polytechnique d'Antananarivo."
     else:
         # Créer une complétion avec la question extraite
         messages = user_context.get(user_id, [])
@@ -37,11 +37,9 @@ def get_info():
             stop=None,
         )
 
-        response = "❤️ 𝐁𝐫𝐮𝐧𝐨 IA 🥰\n"
+        response = ""
         for chunk in completion:
             response += chunk.choices[0].delta.content or ""
-        
-        response += "\nLien de profil 👉: https://www.facebook.com/bruno.rakotomalala.7549"
 
         # Mettre à jour le contexte de l'utilisateur
         user_context[user_id] = messages + [{"role": "assistant", "content": response}]
