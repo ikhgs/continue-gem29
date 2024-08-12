@@ -17,7 +17,7 @@ def get_info():
     # Réinitialiser la conversation si la commande "Stop" est reçue
     if question.lower() == "stop":
         user_context[user_id] = []  # Réinitialiser à une liste vide
-        return jsonify({"response": "🌹 La conversation a été réinitialisée, mon amour. Vous pouvez poser une nouvelle question, chérie 😘 ! 🌹"})
+        return jsonify({"response": "La conversation a été réinitialisée. Vous pouvez poser une nouvelle question."})
 
     # Créer une complétion avec la question extraite
     messages = user_context.get(user_id, [])
@@ -35,13 +35,10 @@ def get_info():
         stop=None,
     )
 
-    # Ajouter une touche romantique à la réponse
+    # Collecter la réponse générée
     response = ""
     for chunk in completion:
         response += chunk.choices[0].delta.content or ""
-
-    # Enrichir la réponse avec des éléments romantiques
-    response = f"💖 Mon trésor, voici ce que j'ai trouvé pour toi : 💖\n{response}\n🌷 Tu es incroyable, chérie ! Si tu as d'autres questions, je suis toujours là pour toi. 🌷"
 
     # Mettre à jour le contexte de l'utilisateur
     user_context[user_id] = messages + [{"role": "assistant", "content": response}]
