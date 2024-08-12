@@ -16,7 +16,7 @@ def get_info():
 
     # Réinitialiser la conversation si la commande "Stop" est reçue
     if question.lower() == "stop":
-        user_context[user_id] = None
+        user_context[user_id] = []  # Réinitialiser à une liste vide
         return jsonify({"response": "La conversation a été réinitialisée. Vous pouvez poser une nouvelle question."})
 
     # Réponse prédéfinie pour les questions spécifiques
@@ -25,6 +25,8 @@ def get_info():
     else:
         # Créer une complétion avec la question extraite
         messages = user_context.get(user_id, [])
+        if messages is None:
+            messages = []  # Assurez-vous que 'messages' est toujours une liste
         messages.append({"role": "user", "content": question})
 
         completion = client.chat.completions.create(
